@@ -1,0 +1,142 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #fcfbf7;
+    color: #333333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 1. FULL WIDTH MAROON HEADER (TOP) */
+.top-header {
+    background-color: #800000; /* Maroon */
+    color: #ffffff;
+    padding: 25px 20px;
+    text-align: center; /* Centers the text horizontally */
+    width: 100%;
+    border-bottom: 4px solid #ffcc00; /* Gold accent bottom bar */
+}
+
+.header-content h1 {
+    font-size: 26px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.header-content p {
+    font-size: 14px;
+    opacity: 0.9;
+    margin-top: 4px;
+}
+
+/* 2. BODY LAYOUT CONTAINER */
+.app-layout {
+    display: flex;
+    flex: 1; /* Takes up the remaining vertical space */
+}
+
+/* 3. SIDEBAR NAVIGATION (LEFT) */
+.sidebar {
+    width: 260px;
+    background-color: #111111;
+    flex-shrink: 0;
+}
+
+.sidebar-brand {
+    padding: 25px 25px 15px 25px;
+}
+
+.sidebar-brand h2 {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.sidebar-menu ul {
+    list-style: none;
+}
+
+.menu-item a {
+    display: flex;
+    align-items: center;
+    color: #999999;
+    text-decoration: none;
+    padding: 15px 25px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.menu-item.dropdown a i {
+    margin-left: auto;
+    font-size: 12px;
+}
+
+.menu-item a:hover {
+    color: #ffffff;
+    background-color: #1a1a1a;
+}
+
+/* Active Menu Item Badge */
+.menu-item.active a {
+    color: #e60000;
+    background-color: #e0e0e0;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    margin-left: 15px;
+    font-weight: 600;
+}
+
+/* 4. MAIN CONTENT AREA (RIGHT - WHITE BACKGROUND) */
+.content-area {
+    flex: 1;
+    padding: 40px;
+    max-width: 1200px;
+    width: 100%;
+    background-color: #ffffff; /* Explicit clean white background area */
+}
+
+section {
+    margin-bottom: 45px;
+}
+
+/* Introduction block specific styling */
+.profile-intro-section {
+    margin-bottom: 40px;
+}
+
+.student-title h2 {
+    color: #800000; /* Name is highlighted in maroon on white background */
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.student-title .subtitle {
+    font-size: 16px;
+    color: #666666;
+    margin-top: 2px;
+    margin-bottom: 15px;
+    font-weight: 500;
+}
+
+section h3 {
+    color: #5c3a21;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e6dfd3;
+    padding-bottom: 8px;
+}
+
+.about-text, .objectives-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #444444;
+    text-align: justify;
+}
