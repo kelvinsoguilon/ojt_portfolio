@@ -1,3 +1,6 @@
+/* ==========================================
+   1. CORE RESET & BODY SETUP
+   ========================================== */
 * {
     margin: 0;
     padding: 0;
@@ -6,21 +9,23 @@
 }
 
 body {
-    background-color: #fcfbf7;
+    background-color: #fcfbf7; /* Off-white canvas tone */
     color: #333333;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-/* 1. FULL WIDTH MAROON HEADER (TOP) */
+/* ==========================================
+   2. FULL WIDTH MAROON HEADER (TOP)
+   ========================================== */
 .top-header {
     background-color: #800000; /* Maroon */
     color: #ffffff;
     padding: 25px 20px;
-    text-align: center; /* Centers the text horizontally */
+    text-align: center;
     width: 100%;
-    border-bottom: 4px solid #ffcc00; /* Gold accent bottom bar */
+    border-bottom: 4px solid #ffcc00; /* Gold Accent Line */
 }
 
 .header-content h1 {
@@ -35,16 +40,18 @@ body {
     margin-top: 4px;
 }
 
-/* 2. BODY LAYOUT CONTAINER */
+/* ==========================================
+   3. BODY LAYOUT CONTAINER (SIDEBAR + WORKSPACE)
+   ========================================== */
 .app-layout {
     display: flex;
-    flex: 1; /* Takes up the remaining vertical space */
+    flex: 1; /* Fills remaining height below the top bar */
 }
 
-/* 3. SIDEBAR NAVIGATION (LEFT) */
+/* Left Sidebar Navigation */
 .sidebar {
     width: 260px;
-    background-color: #111111;
+    background-color: #111111; /* Sleek dark panel */
     flex-shrink: 0;
 }
 
@@ -83,7 +90,7 @@ body {
     background-color: #1a1a1a;
 }
 
-/* Active Menu Item Badge */
+/* Active Page Indicator Capsule */
 .menu-item.active a {
     color: #e60000;
     background-color: #e0e0e0;
@@ -93,26 +100,22 @@ body {
     font-weight: 600;
 }
 
-/* 4. MAIN CONTENT AREA (RIGHT - WHITE BACKGROUND) */
+/* ==========================================
+   4. MAIN WORKSPACE AREA (RIGHT PANEL)
+   ========================================== */
 .content-area {
     flex: 1;
     padding: 40px;
-    max-width: 1200px;
-    width: 100%;
-    background-color: #ffffff; /* Explicit clean white background area */
+    background-color: #ffffff; /* Explicit white surface background */
 }
 
 section {
     margin-bottom: 45px;
 }
 
-/* Introduction block specific styling */
-.profile-intro-section {
-    margin-bottom: 40px;
-}
-
+/* About Me & Headings Typography */
 .student-title h2 {
-    color: #800000; /* Name is highlighted in maroon on white background */
+    color: #800000; /* Name highlighted in maroon */
     font-size: 32px;
     font-weight: 700;
 }
@@ -121,12 +124,11 @@ section {
     font-size: 16px;
     color: #666666;
     margin-top: 2px;
-    margin-bottom: 15px;
-    font-weight: 500;
+    margin-bottom: 20px;
 }
 
 section h3 {
-    color: #5c3a21;
+    color: #5c3a21; /* Clean layout header accent */
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 20px;
@@ -134,9 +136,76 @@ section h3 {
     padding-bottom: 8px;
 }
 
-.about-text, .objectives-text {
+.about-text {
     font-size: 16px;
     line-height: 1.6;
     color: #444444;
-    text-align: justify;
 }
+
+/* Round Profile Link Icons */
+.social-links {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.social-icon {
+    width: 36px;
+    height: 36px;
+    background-color: #ffffff;
+    border: 1px solid #e0decb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #444444;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.social-icon:hover {
+    background-color: #800000;
+    color: #ffffff;
+    border-color: #800000;
+    transform: translateY(-2px);
+}
+
+/* ==========================================
+   5. CARDS GRID & COMPONENT STYLING
+   ========================================== */
+.cards-grid {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.competency-card {
+    flex: 1;
+    background-color: #ffffff;
+    border: 1px solid #f0edd9;
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03); /* Soft subtle shadow structure */
+    transition: transform 0.2s ease;
+}
+
+.competency-card:hover {
+    transform: translateY(-3px);
+}
+
+.card-icon {
+    font-size: 24px;
+    color: #800000;
+    margin-bottom: 15px;
+}
+
+.competency-card h4 {
+    font-size: 17px;
+    font-weight: 600;
+    color: #222222;
+    margin-bottom: 8px;
+}
+
+.competency-card p {
+    font-
