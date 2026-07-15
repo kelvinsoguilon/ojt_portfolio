@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OJT Portfolio | Kelvin V. Soguilon</title>
+    <title>OJT Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     
+    <!-- Full-width Maroon Top Header -->
     <header class="top-header">
         <div class="header-content">
             <h1>Polytechnic University of the Philippines</h1>
@@ -16,77 +17,106 @@
         </div>
     </header>
 
+    <!-- Main Layout Container -->
     <div class="app-layout">
         
+        <!-- Left Sidebar Navigation -->
         <aside class="sidebar">
             <div class="sidebar-brand">
                 <h2>Portfolio</h2>
             </div>
             <nav class="sidebar-menu">
                 <ul>
-                    <li class="menu-item active"><a href="#">Home</a></li>
-                    <li class="menu-item"><a href="#">Company Profile</a></li>
-                    <li class="menu-item"><a href="#">Weekly Report</a></li>
-                    <li class="menu-item dropdown">
-                        <a href="#">Documents <i class="fa-solid fa-caret-down"></i></a>
+                    <li class="menu-item active" data-target="home"><a href="#home">Home</a></li>
+                    <li class="menu-item" data-target="company"><a href="#company">Company Profile</a></li>
+                    <li class="menu-item" data-target="weekly-report"><a href="#weekly-report">Weekly Report</a></li>
+                    <li class="menu-item dropdown" data-target="documents">
+                        <a href="#documents">Documents <i class="fa-solid fa-caret-down"></i></a>
                     </li>
                 </ul>
             </nav>
         </aside>
 
+        <!-- Right Side Main Content Area -->
         <main class="content-area">
             
-            <section class="profile-intro-section">
-                <div class="student-title">
-                    <h2>Kelvin Soguilon</h2>
-                    <p class="subtitle">BS Computer Engineering Student</p>
-                </div>
-                
-                <p class="about-text">
-                    I am an aspiring Computer Engineer passionate about building efficient hardware-software system integrations, navigating version control structures, and designing clean layouts. Currently completing my On-the-Job Training (OJT), my objective is to track milestones and showcase developmental competencies.
-                </p>
-                
-                <div class="social-links">
-                    <a href="#" class="social-icon" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="social-icon" target="_blank"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="social-icon" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-            <section class="competencies-section">
-                <h3>Core Competencies</h3>
-                
-                <div class="cards-grid">
-                    <div class="competency-card">
-                        <div class="card-icon"><i class="fa-solid fa-code"></i></div>
-                        <h4>Software Development</h4>
-                        <p>Familiarity with HTML5, CSS3, interactive script logic, and version trees via Git.</p>
+            <!-- 1. HOME TAB PANEL -->
+            <div id="home" class="tab-panel active-panel">
+                <!-- Student Profile Introduction Header -->
+                <section class="profile-intro-section">
+                    <div class="student-title">
+                        <h2>Kelvin Soguilon</h2>
+                        <p class="subtitle">BS Computer Engineering Student</p>
                     </div>
-
-                    <div class="competency-card">
-                        <div class="card-icon"><i class="fa-solid fa-microchip"></i></div>
-                        <h4>Hardware Systems</h4>
-                        <p>Familiarity with digital logic design, circuit properties, and microcontroller architectures.</p>
+                    
+                    <p class="about-text">
+                        I am an aspiring Computer Engineer passionate about building efficient hardware-software system integrations, navigating version control structures, and designing clean layouts. Currently completing my On-the-Job Training (OJT), my objective is to track milestones and showcase developmental competencies.
+                    </p>
+                    
+                    <div class="social-links">
+                        <a href="#" class="social-icon" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon" target="_blank"><i class="fa-brands fa-github"></i></a>
+                        <a href="#" class="social-icon" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
                     </div>
+                </section>
 
-                    <div class="competency-card">
-                        <div class="card-icon"><i class="fa-solid fa-list-check"></i></div>
-                        <h4>Project Tracking</h4>
-                        <p>Experience organizing documentation layouts, drafting technical progress logs, and managing tasks.</p>
+                <!-- Core Competencies Grid Section -->
+                <section class="competencies-section">
+                    <h3>Core Competencies</h3>
+                    <div class="cards-grid">
+                        <div class="competency-card">
+                            <div class="card-icon"><i class="fa-solid fa-code"></i></div>
+                            <h4>Software Development</h4>
+                            <p>Familiarity with HTML5, CSS3, interactive script logic, and version trees via Git.</p>
+                        </div>
+                        <div class="competency-card">
+                            <div class="card-icon"><i class="fa-solid fa-microchip"></i></div>
+                            <h4>Hardware Systems</h4>
+                            <p>Familiarity with digital logic design, circuit properties, and microcontroller architectures.</p>
+                        </div>
+                        <div class="competency-card">
+                            <div class="card-icon"><i class="fa-solid fa-list-check"></i></div>
+                            <h4>Project Tracking</h4>
+                            <p>Experience organizing documentation layouts, drafting technical progress logs, and managing tasks.</p>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
 
-            <section class="reports-section">
-                <div class="content-header">
-                    <h2>Weekly Progress Reports</h2>
-                    <button class="add-report-btn">+ Add Weekly Report</button>
-                </div>
-                
-                <div class="report-alert">
-                    <p>No reports submitted yet. Click "+ Add Weekly Report" to log your first entry.</p>
-                </div>
-            </section>
-    <script src="script.js"></script>
+            <!-- 2. COMPANY PROFILE TAB PANEL -->
+            <div id="company" class="tab-panel">
+                <section>
+                    <h3>Company Profile</h3>
+                    <p class="about-text">[Provide details regarding your host OJT company, history, or engineering team assignments here.]</p>
+                </section>
+            </div>
+
+            <!-- 3. WEEKLY REPORT TAB PANEL (Moved completely here!) -->
+            <div id="weekly-report" class="tab-panel">
+                <section class="reports-section">
+                    <div class="content-header">
+                        <h2>Weekly Progress Reports</h2>
+                        <button class="add-report-btn">+ Add Weekly Report</button>
+                    </div>
+                    
+                    <div class="report-alert">
+                        <p>No reports submitted yet. Click "+ Add Weekly Report" to log your first entry.</p>
+                    </div>
+                    <div class="reports-container"></div>
+                </section>
+            </div>
+
+            <!-- 4. DOCUMENTS TAB PANEL -->
+            <div id="documents" class="tab-panel">
+                <section>
+                    <h3>Documents</h3>
+                    <p class="about-text">[Attach links, certificates, or university documentation requirements here.]</p>
+                </section>
+            </div>
+
         </main>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>

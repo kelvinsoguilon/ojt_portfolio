@@ -249,3 +249,12 @@ section h3 {
     font-size: 15px;
     border-radius: 4px;
 }
+
+/* Tab visibility configuration */
+.tab-panel {
+    display: none; /* Hide panels by default */
+}
+
+.tab-panel.active-panel {
+    display: block; /* Show only the currently activated layout panel */
+}
