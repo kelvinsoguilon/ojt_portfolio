@@ -208,4 +208,44 @@ section h3 {
 }
 
 .competency-card p {
-    font-
+    font-size: 14px;
+    line-height: 1.5;
+    color: #666666;
+}
+
+/* ==========================================
+   6. WEEKLY PROGRESS REPORTS UTILITIES
+   ========================================== */
+.content-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Clean Button Look */
+.add-report-btn {
+    background-color: #800000;
+    color: #ffffff;
+    border: none;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.add-report-btn:hover {
+    background-color: #660000;
+}
+
+/* Yellow Highlight Box */
+.report-alert {
+    background-color: #fffde7; /* Smooth amber tint */
+    border-left: 4px solid #ffcc00; /* Gold left accent bar */
+    padding: 18px 20px;
+    color: #554400;
+    font-size: 15px;
+    border-radius: 4px;
+}
