@@ -1,5 +1,5 @@
 /* ==========================================
-   1. CORE RESET & BODY SETUP
+   1. CORE RESET & BASE LAYOUT
    ========================================== */
 * {
     margin: 0;
@@ -9,252 +9,253 @@
 }
 
 body {
-    background-color: #fcfbf7; /* Off-white canvas tone */
+    background-color: #fcfbf7;
     color: #333333;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
 }
 
 /* ==========================================
-   2. FULL WIDTH MAROON HEADER (TOP)
+   2. TOP & BOTTOM BARS
    ========================================== */
-.top-header {
-    background-color: #800000; /* Maroon */
+.global-top-bar {
+    background-color: #800000;
     color: #ffffff;
-    padding: 25px 20px;
+    padding: 18px 20px;
     text-align: center;
     width: 100%;
-    border-bottom: 4px solid #ffcc00; /* Gold Accent Line */
+    border-bottom: 4px solid #ffcc00;
+    z-index: 10;
 }
 
-.header-content h1 {
-    font-size: 26px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+.global-bottom-bar {
+    background-color: #800000;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    font-size: 13px;
+    width: 100%;
+    border-top: 3px solid #ffcc00;
+    z-index: 10;
+    margin-top: auto;
 }
 
-.header-content p {
-    font-size: 14px;
-    opacity: 0.9;
-    margin-top: 4px;
+.header-content h1 { font-size: 24px; font-weight: 600; }
+.header-content p { font-size: 13px; opacity: 0.85; margin-top: 2px; }
+
+/* Background Watermark */
+.watermark-bg {
+    position: absolute;
+    top: 75px;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 1;
 }
 
 /* ==========================================
-   3. BODY LAYOUT CONTAINER (SIDEBAR + WORKSPACE)
+   3. APP CONTAINER & SIDEBAR
    ========================================== */
-.app-layout {
+.app-container {
     display: flex;
-    flex: 1; /* Fills remaining height below the top bar */
+    flex: 1;
+    height: calc(100vh - 115px);
+    z-index: 5;
 }
 
-/* Left Sidebar Navigation */
 .sidebar {
-    width: 260px;
-    background-color: #111111; /* Sleek dark panel */
+    width: 250px;
+    background-color: #111111;
     flex-shrink: 0;
+    border-right: 1px solid rgba(255, 204, 0, 0.2);
 }
 
-.sidebar-brand {
-    padding: 25px 25px 15px 25px;
-}
-
-.sidebar-brand h2 {
-    color: #ffffff;
-    font-size: 20px;
-    font-weight: 600;
-}
-
-.sidebar-menu ul {
-    list-style: none;
-}
+.sidebar-brand { padding: 25px; }
+.sidebar-brand h2 { color: #ffffff; font-size: 18px; }
+.sidebar-menu ul { list-style: none; }
 
 .menu-item a {
     display: flex;
     align-items: center;
-    color: #999999;
+    color: #b3b3b3;
     text-decoration: none;
     padding: 15px 25px;
-    font-size: 16px;
-    font-weight: 500;
+    font-size: 15px;
     transition: all 0.2s ease;
 }
 
-.menu-item.dropdown a i {
-    margin-left: auto;
-    font-size: 12px;
-}
+.menu-item a:hover { color: #ffffff; background-color: #1a1a1a; }
+.menu-item.dropdown a i { margin-left: auto; font-size: 11px; }
 
-.menu-item a:hover {
-    color: #ffffff;
-    background-color: #1a1a1a;
-}
-
-/* Active Page Indicator Capsule */
 .menu-item.active a {
     color: #e60000;
-    background-color: #e0e0e0;
-    border-top-left-radius: 12px;
-    border-bottom-left-radius: 12px;
+    background-color: #e5e5e5;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
     margin-left: 15px;
     font-weight: 600;
 }
 
 /* ==========================================
-   4. MAIN WORKSPACE AREA (RIGHT PANEL)
+   4. VIEWPORT & SLIDING PANELS
    ========================================== */
-.content-area {
+.viewport-window {
     flex: 1;
-    padding: 40px;
-    background-color: #ffffff; /* Explicit white surface background */
+    position: relative;
+    overflow: hidden;
+    padding: 30px;
 }
 
-section {
-    margin-bottom: 45px;
-}
-
-/* About Me & Headings Typography */
-.student-title h2 {
-    color: #800000; /* Name highlighted in maroon */
-    font-size: 32px;
-    font-weight: 700;
-}
-
-.student-title .subtitle {
-    font-size: 16px;
-    color: #666666;
-    margin-top: 2px;
-    margin-bottom: 20px;
-}
-
-section h3 {
-    color: #5c3a21; /* Clean layout header accent */
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #e6dfd3;
-    padding-bottom: 8px;
-}
-
-.about-text {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #444444;
-}
-
-/* Round Profile Link Icons */
-.social-links {
-    display: flex;
-    gap: 12px;
-    margin-top: 20px;
-}
-
-.social-icon {
-    width: 36px;
-    height: 36px;
-    background-color: #ffffff;
-    border: 1px solid #e0decb;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #444444;
-    text-decoration: none;
-    font-size: 14px;
-    transition: all 0.2s ease;
-}
-
-.social-icon:hover {
-    background-color: #800000;
-    color: #ffffff;
-    border-color: #800000;
-    transform: translateY(-2px);
-}
-
-/* ==========================================
-   5. CARDS GRID & COMPONENT STYLING
-   ========================================== */
-.cards-grid {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 10px;
-}
-
-.competency-card {
-    flex: 1;
-    background-color: #ffffff;
-    border: 1px solid #f0edd9;
-    border-radius: 12px;
-    padding: 25px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03); /* Soft subtle shadow structure */
-    transition: transform 0.2s ease;
-}
-
-.competency-card:hover {
-    transform: translateY(-3px);
-}
-
-.card-icon {
-    font-size: 24px;
-    color: #800000;
-    margin-bottom: 15px;
-}
-
-.competency-card h4 {
-    font-size: 17px;
-    font-weight: 600;
-    color: #222222;
-    margin-bottom: 8px;
-}
-
-.competency-card p {
-    font-size: 14px;
-    line-height: 1.5;
-    color: #666666;
-}
-
-/* ==========================================
-   6. WEEKLY PROGRESS REPORTS UTILITIES
-   ========================================== */
-.content-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-/* Clean Button Look */
-.add-report-btn {
-    background-color: #800000;
-    color: #ffffff;
-    border: none;
-    padding: 10px 18px;
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.add-report-btn:hover {
-    background-color: #660000;
-}
-
-/* Yellow Highlight Box */
-.report-alert {
-    background-color: #fffde7; /* Smooth amber tint */
-    border-left: 4px solid #ffcc00; /* Gold left accent bar */
-    padding: 18px 20px;
-    color: #554400;
-    font-size: 15px;
-    border-radius: 4px;
-}
-
-/* Tab visibility configuration */
 .tab-panel {
-    display: none; /* Hide panels by default */
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
+    background-color: rgba(255, 255, 255, 0.97);
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    overflow-y: auto;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+    opacity: 0;
 }
 
 .tab-panel.active-panel {
-    display: block; /* Show only the currently activated layout panel */
+    transform: translateX(0);
+    opacity: 1;
+    z-index: 3;
 }
+
+.tab-panel.slide-right {
+    transform: translateX(100%);
+    opacity: 0;
+    z-index: 1;
+}
+
+.tab-panel.slide-left {
+    transform: translateX(-100%);
+    opacity: 0;
+    z-index: 2;
+}
+
+/* ==========================================
+   5. INTERIOR CONTENT & CARDS
+   ========================================== */
+section { margin-bottom: 30px; }
+.student-title h2 { color: #800000; font-size: 28px; font-weight: 700; }
+.student-title .subtitle { font-size: 14px; color: #666666; margin-bottom: 12px; }
+
+section h3 {
+    color: #5c3a21;
+    font-size: 20px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e6dfd3;
+    padding-bottom: 6px;
+}
+
+.about-text { font-size: 14.5px; line-height: 1.6; color: #444444; }
+
+.social-links { display: flex; gap: 10px; margin-top: 15px; }
+.social-icon {
+    width: 34px; height: 34px; background: #ffffff; border: 1px solid #e0decb;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: #444444; text-decoration: none; transition: all 0.2s ease;
+}
+.social-icon:hover { background: #800000; color: #ffffff; border-color: #800000; }
+
+.cards-grid { display: flex; gap: 20px; }
+.competency-card {
+    flex: 1; background: #ffffff; border: 1px solid #f0edd9;
+    border-radius: 10px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+.card-icon { font-size: 22px; color: #800000; margin-bottom: 10px; }
+.competency-card h4 { font-size: 16px; margin-bottom: 6px; }
+.competency-card p { font-size: 13.5px; color: #666666; line-height: 1.4; }
+
+.content-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.add-report-btn {
+    background: #800000; color: #ffffff; border: none; padding: 9px 16px;
+    font-size: 13.5px; font-weight: 600; border-radius: 6px; cursor: pointer;
+}
+.add-report-btn:hover { background: #660000; }
+.report-alert { background: #fffde7; border-left: 4px solid #ffcc00; padding: 15px; color: #554400; font-size: 14.5px; border-radius: 4px; }
+
+/* ==========================================
+   6. REPORT CARDS & MODALS (STRICT HIDDEN DEFAULT)
+   ========================================== */
+.report-card {
+    background-color: #fdfdfd;
+    border: 1px solid #e6dfd3;
+    padding: 18px;
+    margin-top: 15px;
+    border-radius: 8px;
+}
+
+.card-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.report-card-title { color: #800000; font-size: 16px; font-weight: 600; }
+.report-card-text { color: #444444; font-size: 14px; line-height: 1.5; margin-bottom: 10px; }
+
+.file-name-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 12px; color: #800000; background-color: #f7eded;
+    padding: 4px 10px; border-radius: 4px; border: 1px solid #ebd2d2;
+}
+
+.card-actions { display: flex; gap: 8px; }
+.action-btn {
+    border: none; padding: 6px 12px; font-size: 12px; font-weight: 600;
+    border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;
+}
+.view-btn { background-color: #800000; color: #ffffff; }
+.edit-btn { background-color: #e0e0e0; color: #333333; }
+.delete-btn { background-color: #ffebee; color: #c62828; }
+
+/* STRICT MODAL OVERLAY STYLING */
+.modal {
+    display: none !important; /* Forces modals to stay completely hidden on load */
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(3px);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.show-modal {
+    display: flex !important; /* Revealed only via JS execution */
+}
+
+.modal-content {
+    background-color: #ffffff;
+    width: 80%;
+    max-width: 850px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.passcode-modal-content { max-width: 380px; }
+.passcode-body { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+#passcode-input { padding: 9px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; outline: none; }
+#passcode-input:focus { border-color: #800000; }
+
+.modal-header {
+    background-color: #800000; color: #ffffff; padding: 14px 20px;
+    display: flex; justify-content: space-between; align-items: center;
+}
+.modal-header h3 { font-size: 16px; font-weight: 600; }
+.close-modal-btn, .close-passcode-btn { font-size: 22px; cursor: pointer; color: #ffffff; }
+.modal-body iframe { border: none; display: block; }

@@ -1,25 +1,24 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // ---- 1. PASSCODE CONFIGURATION ----
-    const MASTER_PASSCODE = "1234"; // Set your passcode here!
+    // ---- 1. PASSCODE LOGIC ----
+    const MASTER_PASSCODE = "kelvin123";
 
     const passcodeModal = document.getElementById('passcode-modal');
     const passcodeInput = document.getElementById('passcode-input');
     const submitPasscodeBtn = document.getElementById('submit-passcode-btn');
     const closePasscodeBtn = document.querySelector('.close-passcode-btn');
 
-    let pendingAction = null; // Stores the action waiting for authorization
+    let pendingAction = null;
 
-    // Reusable helper to prompt for passcode before running an action
     function requestPasscode(actionCallback) {
         pendingAction = actionCallback;
         passcodeInput.value = '';
-        passcodeModal.style.display = 'flex';
+        passcodeModal.classList.add('show-modal');
         passcodeInput.focus();
     }
 
     function verifyAndExecute() {
         if (passcodeInput.value === MASTER_PASSCODE) {
-            passcodeModal.style.display = 'none';
+            passcodeModal.classList.remove('show-modal');
             if (pendingAction) {
                 pendingAction();
                 pendingAction = null;
@@ -39,12 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (closePasscodeBtn) {
         closePasscodeBtn.addEventListener('click', () => {
-            passcodeModal.style.display = 'none';
+            passcodeModal.classList.remove('show-modal');
             pendingAction = null;
         });
     }
 
-    // ---- 2. SIDEBAR SLIDING TAB CONTROLLER ----
+    // ---- 2. NAVIGATION SWAP ----
     const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
     const tabPanels = document.querySelectorAll('.tab-panel');
 
@@ -83,26 +82,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let weekCount = 1;
 
-    // PDF Modal close handlers
     if (closeModalBtn) {
         closeModalBtn.addEventListener('click', () => {
-            pdfModal.style.display = 'none';
+            pdfModal.classList.remove('show-modal');
             pdfFrame.src = '';
         });
     }
 
     window.addEventListener('click', (e) => {
         if (e.target === pdfModal) {
-            pdfModal.style.display = 'none';
+            pdfModal.classList.remove('show-modal');
             pdfFrame.src = '';
         }
         if (e.target === passcodeModal) {
-            passcodeModal.style.display = 'none';
+            passcodeModal.classList.remove('show-modal');
             pendingAction = null;
         }
     });
 
-    // Add Report Action (Protected by Passcode)
     if (addReportBtn) {
         addReportBtn.addEventListener('click', () => {
             requestPasscode(() => {
@@ -143,14 +140,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="file-name-badge"><i class="fa-solid fa-file-pdf"></i> ${file.name}</span>
                     `;
 
-                    // View PDF Action (No passcode needed)
                     reportCard.querySelector('.view-btn').addEventListener('click', () => {
                         modalTitle.textContent = `Preview: Week ${reportCard.getAttribute('data-week')} Report (${file.name})`;
                         pdfFrame.src = fileURL;
-                        pdfModal.style.display = 'flex';
+                        pdfModal.classList.add('show-modal');
                     });
 
-                    // Edit Action (Protected by Passcode)
                     reportCard.querySelector('.edit-btn').addEventListener('click', () => {
                         requestPasscode(() => {
                             const currentRemarks = reportCard.querySelector('.report-card-text').textContent;
@@ -161,7 +156,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     });
 
-                    // Delete Action (Protected by Passcode)
                     reportCard.querySelector('.delete-btn').addEventListener('click', () => {
                         requestPasscode(() => {
                             if (confirm('Are you sure you want to delete this weekly report entry?')) {

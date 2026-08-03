@@ -9,7 +9,7 @@
 </head>
 <body>
 
-    <!-- 1. FULL WIDTH TOP MAROON RECTANGLE -->
+    <!-- TOP HEADER -->
     <header class="global-top-bar">
         <div class="header-content">
             <h1>Polytechnic University of the Philippines</h1>
@@ -17,14 +17,13 @@
         </div>
     </header>
 
-    <!-- 2. SCREEN BACKGROUND WATERMARK -->
-    <!-- Replace 'pup-logo.png' with the relative path to your image file -->
+    <!-- BACKGROUND WATERMARK -->
     <div class="watermark-bg" style="background-image: url('pup-logo.png');"></div>
 
-    <!-- 3. MAIN WORKSPACE WRAPPER -->
+    <!-- MAIN FLEX APP CONTAINER -->
     <div class="app-container">
         
-        <!-- Animated Slide Sidebar Navigation -->
+        <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="sidebar-brand">
                 <h2>Navigation</h2>
@@ -41,10 +40,10 @@
             </nav>
         </aside>
 
-        <!-- Right Side Window Content (Holds Sliding Panels) -->
+        <!-- VIEWPORT WINDOW -->
         <main class="viewport-window">
             
-            <!-- HOME VIEW -->
+            <!-- HOME TAB -->
             <div id="home" class="tab-panel active-panel">
                 <section class="profile-intro-section">
                     <div class="student-title">
@@ -83,7 +82,7 @@
                 </section>
             </div>
 
-            <!-- COMPANY PROFILE VIEW -->
+            <!-- COMPANY PROFILE TAB -->
             <div id="company" class="tab-panel slide-right">
                 <section>
                     <h3>Company Profile</h3>
@@ -91,7 +90,7 @@
                 </section>
             </div>
 
-            <!-- WEEKLY REPORT VIEW -->
+            <!-- WEEKLY REPORT TAB -->
             <div id="weekly-report" class="tab-panel slide-right">
                 <section class="reports-section">
                     <div class="content-header">
@@ -105,7 +104,7 @@
                 </section>
             </div>
 
-            <!-- DOCUMENTS VIEW -->
+            <!-- DOCUMENTS TAB -->
             <div id="documents" class="tab-panel slide-right">
                 <section>
                     <h3>Documents</h3>
@@ -116,12 +115,12 @@
         </main>
     </div>
 
-    <!-- 4. FULL WIDTH BOTTOM MAROON RECTANGLE -->
+    <!-- FOOTER -->
     <footer class="global-bottom-bar">
         <p>&copy; 2026 PUP Department of Computer Engineering | Kelvin Soguilon Portfolio</p>
     </footer>
 
-    <!-- 5. PASSCODE VERIFICATION MODAL -->
+    <!-- PASSCODE MODAL -->
     <div id="passcode-modal" class="modal">
         <div class="modal-content passcode-modal-content">
             <div class="modal-header">
@@ -136,7 +135,7 @@
         </div>
     </div>
 
-    <!-- 6. PDF PREVIEW MODAL -->
+    <!-- PDF PREVIEW MODAL -->
     <div id="pdf-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -149,8 +148,6 @@
         </div>
     </div>
 
-    <!-- 7. SCRIPT INCLUSION -->
-    <script src="script.js"></script>
-
+    <script src="./script.js"></script>
 </body>
 </html>
