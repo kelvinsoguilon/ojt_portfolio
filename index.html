@@ -8,22 +8,26 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    
-    <!-- Full-width Maroon Top Header -->
-    <header class="top-header">
+
+    <!-- 1. FULL WIDTH TOP MAROON RECTANGLE -->
+    <header class="global-top-bar">
         <div class="header-content">
             <h1>Polytechnic University of the Philippines</h1>
             <p>On-the-Job Training Portfolio</p>
         </div>
     </header>
 
-    <!-- Main Layout Container -->
-    <div class="app-layout">
+    <!-- 2. SCREEN BACKGROUND WATERMARK -->
+    <!-- Replace 'pup-logo.png' with the relative path to your image file -->
+    <div class="watermark-bg" style="background-image: url('pup-logo.png');"></div>
+
+    <!-- 3. MAIN WORKSPACE WRAPPER -->
+    <div class="app-container">
         
-        <!-- Left Sidebar Navigation -->
+        <!-- Animated Slide Sidebar Navigation -->
         <aside class="sidebar">
             <div class="sidebar-brand">
-                <h2>Portfolio</h2>
+                <h2>Navigation</h2>
             </div>
             <nav class="sidebar-menu">
                 <ul>
@@ -37,22 +41,19 @@
             </nav>
         </aside>
 
-        <!-- Right Side Main Content Area -->
-        <main class="content-area">
+        <!-- Right Side Window Content (Holds Sliding Panels) -->
+        <main class="viewport-window">
             
-            <!-- 1. HOME TAB PANEL -->
+            <!-- HOME VIEW -->
             <div id="home" class="tab-panel active-panel">
-                <!-- Student Profile Introduction Header -->
                 <section class="profile-intro-section">
                     <div class="student-title">
                         <h2>Kelvin Soguilon</h2>
                         <p class="subtitle">BS Computer Engineering Student</p>
                     </div>
-                    
                     <p class="about-text">
                         I am an aspiring Computer Engineer passionate about building efficient hardware-software system integrations, navigating version control structures, and designing clean layouts. Currently completing my On-the-Job Training (OJT), my objective is to track milestones and showcase developmental competencies.
                     </p>
-                    
                     <div class="social-links">
                         <a href="#" class="social-icon" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="#" class="social-icon" target="_blank"><i class="fa-brands fa-github"></i></a>
@@ -60,7 +61,6 @@
                     </div>
                 </section>
 
-                <!-- Core Competencies Grid Section -->
                 <section class="competencies-section">
                     <h3>Core Competencies</h3>
                     <div class="cards-grid">
@@ -83,22 +83,21 @@
                 </section>
             </div>
 
-            <!-- 2. COMPANY PROFILE TAB PANEL -->
-            <div id="company" class="tab-panel">
+            <!-- COMPANY PROFILE VIEW -->
+            <div id="company" class="tab-panel slide-right">
                 <section>
                     <h3>Company Profile</h3>
-                    <p class="about-text">[Provide details regarding your host OJT company, history, or engineering team assignments here.]</p>
+                    <p class="about-text">Provide details regarding your host OJT company, history, or engineering team assignments here.</p>
                 </section>
             </div>
 
-            <!-- 3. WEEKLY REPORT TAB PANEL (Moved completely here!) -->
-            <div id="weekly-report" class="tab-panel">
+            <!-- WEEKLY REPORT VIEW -->
+            <div id="weekly-report" class="tab-panel slide-right">
                 <section class="reports-section">
                     <div class="content-header">
                         <h2>Weekly Progress Reports</h2>
                         <button class="add-report-btn">+ Add Weekly Report</button>
                     </div>
-                    
                     <div class="report-alert">
                         <p>No reports submitted yet. Click "+ Add Weekly Report" to log your first entry.</p>
                     </div>
@@ -106,17 +105,52 @@
                 </section>
             </div>
 
-            <!-- 4. DOCUMENTS TAB PANEL -->
-            <div id="documents" class="tab-panel">
+            <!-- DOCUMENTS VIEW -->
+            <div id="documents" class="tab-panel slide-right">
                 <section>
                     <h3>Documents</h3>
-                    <p class="about-text">[Attach links, certificates, or university documentation requirements here.]</p>
+                    <p class="about-text">Attach links, certificates, or university documentation requirements here.</p>
                 </section>
             </div>
 
         </main>
     </div>
 
+    <!-- 4. FULL WIDTH BOTTOM MAROON RECTANGLE -->
+    <footer class="global-bottom-bar">
+        <p>&copy; 2026 PUP Department of Computer Engineering | Kelvin Soguilon Portfolio</p>
+    </footer>
+
+    <!-- 5. PASSCODE VERIFICATION MODAL -->
+    <div id="passcode-modal" class="modal">
+        <div class="modal-content passcode-modal-content">
+            <div class="modal-header">
+                <h3>Passcode Required</h3>
+                <span class="close-passcode-btn">&times;</span>
+            </div>
+            <div class="modal-body passcode-body">
+                <p>Enter your master passcode to continue:</p>
+                <input type="password" id="passcode-input" placeholder="Enter passcode..." />
+                <button id="submit-passcode-btn" class="action-btn view-btn">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. PDF PREVIEW MODAL -->
+    <div id="pdf-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">PDF Preview</h3>
+                <span class="close-modal-btn">&times;</span>
+            </div>
+            <div class="modal-body">
+                <iframe id="pdf-frame" src="" width="100%" height="500px"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- 7. SCRIPT INCLUSION -->
     <script src="script.js"></script>
+
 </body>
 </html>

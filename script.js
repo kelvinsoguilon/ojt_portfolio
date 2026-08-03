@@ -1,62 +1,184 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // ---- PART 1: TAB CLICK SWITCH ROUTING ----
+    // ---- 1. PASSCODE CONFIGURATION ----
+    const MASTER_PASSCODE = "1234"; // Set your passcode here!
+
+    const passcodeModal = document.getElementById('passcode-modal');
+    const passcodeInput = document.getElementById('passcode-input');
+    const submitPasscodeBtn = document.getElementById('submit-passcode-btn');
+    const closePasscodeBtn = document.querySelector('.close-passcode-btn');
+
+    let pendingAction = null; // Stores the action waiting for authorization
+
+    // Reusable helper to prompt for passcode before running an action
+    function requestPasscode(actionCallback) {
+        pendingAction = actionCallback;
+        passcodeInput.value = '';
+        passcodeModal.style.display = 'flex';
+        passcodeInput.focus();
+    }
+
+    function verifyAndExecute() {
+        if (passcodeInput.value === MASTER_PASSCODE) {
+            passcodeModal.style.display = 'none';
+            if (pendingAction) {
+                pendingAction();
+                pendingAction = null;
+            }
+        } else {
+            alert('Incorrect passcode!');
+            passcodeInput.value = '';
+        }
+    }
+
+    if (submitPasscodeBtn) submitPasscodeBtn.addEventListener('click', verifyAndExecute);
+    if (passcodeInput) {
+        passcodeInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') verifyAndExecute();
+        });
+    }
+
+    if (closePasscodeBtn) {
+        closePasscodeBtn.addEventListener('click', () => {
+            passcodeModal.style.display = 'none';
+            pendingAction = null;
+        });
+    }
+
+    // ---- 2. SIDEBAR SLIDING TAB CONTROLLER ----
     const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
     const tabPanels = document.querySelectorAll('.tab-panel');
 
     menuItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            // Remove active highlighting from all menu choices
+        item.addEventListener('click', () => {
+            const targetId = item.getAttribute('data-target');
+            const currentActivePanel = document.querySelector('.tab-panel.active-panel');
+            const targetPanel = document.getElementById(targetId);
+
+            if (!currentActivePanel || currentActivePanel.id === targetId) return;
+
             menuItems.forEach(i => i.classList.remove('active'));
-            
-            // Add highlighting indicator to clicked choice
             item.classList.add('active');
 
-            // Find the panel target ID data
-            const targetId = item.getAttribute('data-target');
+            currentActivePanel.classList.remove('active-panel', 'slide-right');
+            currentActivePanel.classList.add('slide-left');
 
-            // Toggle visibility across sections
-            tabPanels.forEach(panel => {
-                if (panel.id === targetId) {
-                    panel.classList.add('active-panel');
-                } else {
-                    panel.classList.remove('active-panel');
-                }
-            });
+            targetPanel.classList.remove('slide-left');
+            targetPanel.classList.add('slide-right');
+            
+            void targetPanel.offsetWidth; 
+
+            targetPanel.classList.remove('slide-right');
+            targetPanel.classList.add('active-panel');
         });
     });
 
-    // ---- PART 2: WEEKLY PROGRESS REPORT GENERATOR ----
+    // ---- 3. REPORT MANAGEMENT ENGINE ----
     const addReportBtn = document.querySelector('.add-report-btn');
     const reportAlert = document.querySelector('.report-alert');
     const reportsContainer = document.querySelector('.reports-container');
+    const pdfModal = document.getElementById('pdf-modal');
+    const pdfFrame = document.getElementById('pdf-frame');
+    const modalTitle = document.getElementById('modal-title');
+    const closeModalBtn = document.querySelector('.close-modal-btn');
 
     let weekCount = 1;
 
+    // PDF Modal close handlers
+    if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', () => {
+            pdfModal.style.display = 'none';
+            pdfFrame.src = '';
+        });
+    }
+
+    window.addEventListener('click', (e) => {
+        if (e.target === pdfModal) {
+            pdfModal.style.display = 'none';
+            pdfFrame.src = '';
+        }
+        if (e.target === passcodeModal) {
+            passcodeModal.style.display = 'none';
+            pendingAction = null;
+        }
+    });
+
+    // Add Report Action (Protected by Passcode)
     if (addReportBtn) {
         addReportBtn.addEventListener('click', () => {
-            const reportText = prompt(`Enter progress details for Week ${weekCount}:`);
-            
-            if (!reportText || reportText.trim() === "") return;
+            requestPasscode(() => {
+                const fileInput = document.createElement('input');
+                fileInput.type = 'file';
+                fileInput.accept = 'application/pdf';
 
-            if (reportAlert) {
-                reportAlert.style.display = 'none';
-            }
+                fileInput.onchange = (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
 
-            const reportCard = document.createElement('div');
-            reportCard.style.backgroundColor = '#fdfdfd';
-            reportCard.style.border = '1px solid #e6dfd3';
-            reportCard.style.padding = '15px 20px';
-            reportCard.style.marginTop = '15px';
-            reportCard.style.borderRadius = '8px';
-            reportCard.style.boxShadow = '0 2px 6px rgba(0,0,0,0.02)';
+                    if (file.type !== 'application/pdf') {
+                        alert('Please select a valid PDF file.');
+                        return;
+                    }
 
-            reportCard.innerHTML = `
-                <h4 style="color: #800000; margin-bottom: 5px;">Week ${weekCount} Progress Report</h4>
-                <p style="color: #444444; font-size: 14px; line-height: 1.5;">${reportText}</p>
-            `;
+                    const reportText = prompt(`Enter brief remarks for Week ${weekCount}:`, `Weekly log for ${file.name}`);
+                    if (reportText === null) return;
 
-            reportsContainer.appendChild(reportCard);
-            weekCount++;
+                    if (reportAlert) reportAlert.style.display = 'none';
+
+                    const fileURL = URL.createObjectURL(file);
+
+                    const reportCard = document.createElement('div');
+                    reportCard.className = 'report-card';
+                    reportCard.setAttribute('data-week', weekCount);
+
+                    reportCard.innerHTML = `
+                        <div class="card-header-row">
+                            <h4 class="report-card-title">Week ${weekCount} Progress Report</h4>
+                            <div class="card-actions">
+                                <button class="action-btn view-btn"><i class="fa-solid fa-eye"></i> View PDF</button>
+                                <button class="action-btn edit-btn"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                <button class="action-btn delete-btn"><i class="fa-solid fa-trash"></i> Delete</button>
+                            </div>
+                        </div>
+                        <p class="report-card-text">${reportText}</p>
+                        <span class="file-name-badge"><i class="fa-solid fa-file-pdf"></i> ${file.name}</span>
+                    `;
+
+                    // View PDF Action (No passcode needed)
+                    reportCard.querySelector('.view-btn').addEventListener('click', () => {
+                        modalTitle.textContent = `Preview: Week ${reportCard.getAttribute('data-week')} Report (${file.name})`;
+                        pdfFrame.src = fileURL;
+                        pdfModal.style.display = 'flex';
+                    });
+
+                    // Edit Action (Protected by Passcode)
+                    reportCard.querySelector('.edit-btn').addEventListener('click', () => {
+                        requestPasscode(() => {
+                            const currentRemarks = reportCard.querySelector('.report-card-text').textContent;
+                            const updatedRemarks = prompt('Edit your report remarks:', currentRemarks);
+                            if (updatedRemarks !== null && updatedRemarks.trim() !== '') {
+                                reportCard.querySelector('.report-card-text').textContent = updatedRemarks;
+                            }
+                        });
+                    });
+
+                    // Delete Action (Protected by Passcode)
+                    reportCard.querySelector('.delete-btn').addEventListener('click', () => {
+                        requestPasscode(() => {
+                            if (confirm('Are you sure you want to delete this weekly report entry?')) {
+                                reportCard.remove();
+                                if (reportsContainer.children.length === 0 && reportAlert) {
+                                    reportAlert.style.display = 'block';
+                                }
+                            }
+                        });
+                    });
+
+                    reportsContainer.appendChild(reportCard);
+                    weekCount++;
+                };
+
+                fileInput.click();
+            });
         });
     }
 });
