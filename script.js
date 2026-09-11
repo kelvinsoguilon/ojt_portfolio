@@ -43,33 +43,49 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ---- 2. NAVIGATION SWAP ----
+    // ---- 2. ROBUST NAVIGATION ENGINE (FIXES SYNC & PANEL DISPLAY) ----
     const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
     const tabPanels = document.querySelectorAll('.tab-panel');
 
-    menuItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const targetId = item.getAttribute('data-target');
-            const currentActivePanel = document.querySelector('.tab-panel.active-panel');
-            const targetPanel = document.getElementById(targetId);
+    function switchTab(targetId) {
+        // Update active highlight on sidebar items
+        menuItems.forEach(item => {
+            if (item.getAttribute('data-target') === targetId) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
 
-            if (!currentActivePanel || currentActivePanel.id === targetId) return;
+        // Hide all panels cleanly
+        tabPanels.forEach(panel => {
+            panel.classList.remove('active-panel', 'slide-left');
+            panel.classList.add('slide-right');
+        });
 
-            menuItems.forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
-
-            currentActivePanel.classList.remove('active-panel', 'slide-right');
-            currentActivePanel.classList.add('slide-left');
-
-            targetPanel.classList.remove('slide-left');
-            targetPanel.classList.add('slide-right');
-            
-            void targetPanel.offsetWidth; 
-
-            targetPanel.classList.remove('slide-right');
+        // Show targeted panel cleanly
+        const targetPanel = document.getElementById(targetId);
+        if (targetPanel) {
+            targetPanel.classList.remove('slide-right', 'slide-left');
             targetPanel.classList.add('active-panel');
+        }
+    }
+
+    // Event Delegation for Sidebar Clicks (handles clicks on child icons/links accurately)
+    menuItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            const targetId = item.getAttribute('data-target');
+            if (targetId) {
+                switchTab(targetId);
+            }
         });
     });
+
+    // Sync on direct URL Hash navigation (e.g., reloading page with #documents or #company)
+    const initialHash = window.location.hash.replace('#', '');
+    if (initialHash && document.getElementById(initialHash)) {
+        switchTab(initialHash);
+    }
 
     // ---- 3. REPORT MANAGEMENT ENGINE ----
     const addReportBtn = document.querySelector('.add-report-btn');
