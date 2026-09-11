@@ -284,6 +284,7 @@ section h3 {
     height: 100%;
     object-fit: cover;
     display: block;
+    font-size: 0; /* Keeps broken alt text hidden inside frame */
 }
 
 .centered-links {
