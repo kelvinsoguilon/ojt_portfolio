@@ -43,12 +43,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ---- 2. ROBUST NAVIGATION ENGINE (FIXES SYNC & PANEL DISPLAY) ----
+// ---- 2. ROBUST NAVIGATION ENGINE ----
     const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
     const tabPanels = document.querySelectorAll('.tab-panel');
 
     function switchTab(targetId) {
-        // Update active highlight on sidebar items
+        if (!targetId) return;
+
+        // 1. Sync sidebar highlight
         menuItems.forEach(item => {
             if (item.getAttribute('data-target') === targetId) {
                 item.classList.add('active');
@@ -57,19 +59,38 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        // Hide all panels cleanly
+        // 2. Hide all panels
         tabPanels.forEach(panel => {
-            panel.classList.remove('active-panel', 'slide-left');
-            panel.classList.add('slide-right');
+            panel.classList.remove('active-panel');
         });
 
-        // Show targeted panel cleanly
+        // 3. Show targeted panel safely
         const targetPanel = document.getElementById(targetId);
         if (targetPanel) {
-            targetPanel.classList.remove('slide-right', 'slide-left');
             targetPanel.classList.add('active-panel');
         }
     }
+
+    // Attach click events securely to sidebar menu links
+    menuItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            const targetId = item.getAttribute('data-target');
+            if (targetId) {
+                switchTab(targetId);
+            }
+        });
+    });
+
+    // Handle initial page load and hash changes
+    function syncHash() {
+        const hash = window.location.hash.replace('#', '');
+        if (hash && document.getElementById(hash)) {
+            switchTab(hash);
+        }
+    }
+
+    window.addEventListener('hashchange', syncHash);
+    syncHash();
 
     // Event Delegation for Sidebar Clicks (handles clicks on child icons/links accurately)
     menuItems.forEach(item => {
