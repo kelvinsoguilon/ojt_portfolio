@@ -105,33 +105,62 @@ body {
 }
 
 /* ==========================================
-   4. VIEWPORT & TAB PANELS (FIXED DISPLAY)
+   4. VIEWPORT & SLIDING PANELS (FIXED)
    ========================================== */
 .viewport-window {
     flex: 1;
     position: relative;
+    overflow: hidden;
     padding: 30px;
     height: 100%;
-    overflow-y: auto;
 }
 
 .tab-panel {
-    display: none; /* Hide non-active panels cleanly */
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    right: 30px;
+    bottom: 30px;
     background-color: rgba(255, 255, 255, 0.97);
     border-radius: 12px;
     padding: 30px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-    min-height: 100%;
+    overflow-y: auto;
+    
+    /* Smooth sliding transition */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease, visibility 0.4s;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    
+    /* Default off-screen state (Right side) */
+    transform: translateX(100%);
+    z-index: 1;
 }
 
+/* Active State: Centered */
 .tab-panel.active-panel {
-    display: block !important; /* Forces active panel directly into view */
-    animation: fadeIn 0.25s ease-in-out;
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    z-index: 3;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(4px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Exiting/Previous State: Slide Left */
+.tab-panel.slide-left {
+    transform: translateX(-100%);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1;
+}
+
+/* Off-screen Right State */
+.tab-panel.slide-right {
+    transform: translateX(100%);
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1;
 }
 
 /* ==========================================
