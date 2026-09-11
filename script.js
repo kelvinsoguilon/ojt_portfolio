@@ -43,70 +43,56 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-// ---- 2. ROBUST NAVIGATION ENGINE ----
-    const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
-    const tabPanels = document.querySelectorAll('.tab-panel');
+// ---- TAB NAVIGATION ENGINE ----
+const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
+const tabPanels = document.querySelectorAll('.tab-panel');
 
-    function switchTab(targetId) {
-        if (!targetId) return;
+function switchTab(targetId) {
+    if (!targetId) return;
 
-        // 1. Sync sidebar highlight
-        menuItems.forEach(item => {
-            if (item.getAttribute('data-target') === targetId) {
-                item.classList.add('active');
-            } else {
-                item.classList.remove('active');
-            }
-        });
-
-        // 2. Hide all panels
-        tabPanels.forEach(panel => {
-            panel.classList.remove('active-panel');
-        });
-
-        // 3. Show targeted panel safely
-        const targetPanel = document.getElementById(targetId);
-        if (targetPanel) {
-            targetPanel.classList.add('active-panel');
-        }
-    }
-
-    // Attach click events securely to sidebar menu links
+    // 1. Update sidebar navigation active state
     menuItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            const targetId = item.getAttribute('data-target');
-            if (targetId) {
-                switchTab(targetId);
-            }
-        });
+        if (item.getAttribute('data-target') === targetId) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
     });
 
-    // Handle initial page load and hash changes
-    function syncHash() {
-        const hash = window.location.hash.replace('#', '');
-        if (hash && document.getElementById(hash)) {
-            switchTab(hash);
-        }
-    }
-
-    window.addEventListener('hashchange', syncHash);
-    syncHash();
-
-    // Event Delegation for Sidebar Clicks (handles clicks on child icons/links accurately)
-    menuItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            const targetId = item.getAttribute('data-target');
-            if (targetId) {
-                switchTab(targetId);
-            }
-        });
+    // 2. Hide all tab panels completely
+    tabPanels.forEach(panel => {
+        panel.classList.remove('active-panel', 'slide-left', 'slide-right');
     });
 
-    // Sync on direct URL Hash navigation (e.g., reloading page with #documents or #company)
-    const initialHash = window.location.hash.replace('#', '');
-    if (initialHash && document.getElementById(initialHash)) {
-        switchTab(initialHash);
+    // 3. Reveal target panel cleanly
+    const targetPanel = document.getElementById(targetId);
+    if (targetPanel) {
+        targetPanel.classList.add('active-panel');
     }
+}
+
+// Attach event listeners to sidebar menu links
+menuItems.forEach(item => {
+    item.addEventListener('click', (e) => {
+        const targetId = item.getAttribute('data-target');
+        if (targetId) {
+            switchTab(targetId);
+        }
+    });
+});
+
+// Sync hash on page load or back/forward browser navigation
+function handleHashChange() {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && document.getElementById(hash)) {
+        switchTab(hash);
+    } else {
+        switchTab('home'); // Fallback default tab
+    }
+}
+
+window.addEventListener('hashchange', handleHashChange);
+window.addEventListener('DOMContentLoaded', handleHashChange);
 
     // ---- 3. REPORT MANAGEMENT ENGINE ----
     const addReportBtn = document.querySelector('.add-report-btn');
