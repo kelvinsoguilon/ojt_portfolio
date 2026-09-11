@@ -259,3 +259,34 @@ section h3 {
 .modal-header h3 { font-size: 16px; font-weight: 600; }
 .close-modal-btn, .close-passcode-btn { font-size: 22px; cursor: pointer; color: #ffffff; }
 .modal-body iframe { border: none; display: block; }
+
+/* Centered Profile Layout */
+.centered-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 650px;
+    margin: 0 auto;
+}
+
+.profile-avatar-wrapper {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #800000;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+}
+
+.profile-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.centered-links {
+    justify-content: center;
+    margin-top: 20px;
+}
