@@ -1,201 +1,52 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // ---- 1. PASSCODE LOGIC ----
-    const MASTER_PASSCODE = "kelvin123";
+    // ---- TAB NAVIGATION ENGINE ----
+    const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
+    const tabPanels = document.querySelectorAll('.tab-panel');
 
-    const passcodeModal = document.getElementById('passcode-modal');
-    const passcodeInput = document.getElementById('passcode-input');
-    const submitPasscodeBtn = document.getElementById('submit-passcode-btn');
-    const closePasscodeBtn = document.querySelector('.close-passcode-btn');
+    function switchTab(targetId) {
+        if (!targetId) return;
 
-    let pendingAction = null;
-
-    function requestPasscode(actionCallback) {
-        pendingAction = actionCallback;
-        passcodeInput.value = '';
-        passcodeModal.classList.add('show-modal');
-        passcodeInput.focus();
-    }
-
-    function verifyAndExecute() {
-        if (passcodeInput.value === MASTER_PASSCODE) {
-            passcodeModal.classList.remove('show-modal');
-            if (pendingAction) {
-                pendingAction();
-                pendingAction = null;
+        // 1. Update sidebar navigation active state
+        menuItems.forEach(item => {
+            if (item.getAttribute('data-target') === targetId) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
             }
-        } else {
-            alert('Incorrect passcode!');
-            passcodeInput.value = '';
+        });
+
+        // 2. Hide all tab panels
+        tabPanels.forEach(panel => {
+            panel.classList.remove('active-panel');
+        });
+
+        // 3. Reveal targeted panel
+        const targetPanel = document.getElementById(targetId);
+        if (targetPanel) {
+            targetPanel.classList.add('active-panel');
         }
     }
 
-    if (submitPasscodeBtn) submitPasscodeBtn.addEventListener('click', verifyAndExecute);
-    if (passcodeInput) {
-        passcodeInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') verifyAndExecute();
-        });
-    }
-
-    if (closePasscodeBtn) {
-        closePasscodeBtn.addEventListener('click', () => {
-            passcodeModal.classList.remove('show-modal');
-            pendingAction = null;
-        });
-    }
-
-// ---- TAB NAVIGATION ENGINE ----
-const menuItems = document.querySelectorAll('.sidebar-menu .menu-item');
-const tabPanels = document.querySelectorAll('.tab-panel');
-
-function switchTab(targetId) {
-    if (!targetId) return;
-
-    // 1. Update sidebar navigation active state
+    // Attach click handlers to menu links
     menuItems.forEach(item => {
-        if (item.getAttribute('data-target') === targetId) {
-            item.classList.add('active');
+        item.addEventListener('click', () => {
+            const targetId = item.getAttribute('data-target');
+            if (targetId) {
+                switchTab(targetId);
+            }
+        });
+    });
+
+    // Handle hash change for URL navigation
+    function handleHashChange() {
+        const hash = window.location.hash.replace('#', '');
+        if (hash && document.getElementById(hash)) {
+            switchTab(hash);
         } else {
-            item.classList.remove('active');
+            switchTab('home');
         }
-    });
-
-    // 2. Hide all tab panels completely
-    tabPanels.forEach(panel => {
-        panel.classList.remove('active-panel', 'slide-left', 'slide-right');
-    });
-
-    // 3. Reveal target panel cleanly
-    const targetPanel = document.getElementById(targetId);
-    if (targetPanel) {
-        targetPanel.classList.add('active-panel');
-    }
-}
-
-// Attach event listeners to sidebar menu links
-menuItems.forEach(item => {
-    item.addEventListener('click', (e) => {
-        const targetId = item.getAttribute('data-target');
-        if (targetId) {
-            switchTab(targetId);
-        }
-    });
-});
-
-// Sync hash on page load or back/forward browser navigation
-function handleHashChange() {
-    const hash = window.location.hash.replace('#', '');
-    if (hash && document.getElementById(hash)) {
-        switchTab(hash);
-    } else {
-        switchTab('home'); // Fallback default tab
-    }
-}
-
-window.addEventListener('hashchange', handleHashChange);
-window.addEventListener('DOMContentLoaded', handleHashChange);
-
-    // ---- 3. REPORT MANAGEMENT ENGINE ----
-    const addReportBtn = document.querySelector('.add-report-btn');
-    const reportAlert = document.querySelector('.report-alert');
-    const reportsContainer = document.querySelector('.reports-container');
-    const pdfModal = document.getElementById('pdf-modal');
-    const pdfFrame = document.getElementById('pdf-frame');
-    const modalTitle = document.getElementById('modal-title');
-    const closeModalBtn = document.querySelector('.close-modal-btn');
-
-    let weekCount = 1;
-
-    if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', () => {
-            pdfModal.classList.remove('show-modal');
-            pdfFrame.src = '';
-        });
     }
 
-    window.addEventListener('click', (e) => {
-        if (e.target === pdfModal) {
-            pdfModal.classList.remove('show-modal');
-            pdfFrame.src = '';
-        }
-        if (e.target === passcodeModal) {
-            passcodeModal.classList.remove('show-modal');
-            pendingAction = null;
-        }
-    });
-
-    if (addReportBtn) {
-        addReportBtn.addEventListener('click', () => {
-            requestPasscode(() => {
-                const fileInput = document.createElement('input');
-                fileInput.type = 'file';
-                fileInput.accept = 'application/pdf';
-
-                fileInput.onchange = (e) => {
-                    const file = e.target.files[0];
-                    if (!file) return;
-
-                    if (file.type !== 'application/pdf') {
-                        alert('Please select a valid PDF file.');
-                        return;
-                    }
-
-                    const reportText = prompt(`Enter brief remarks for Week ${weekCount}:`, `Weekly log for ${file.name}`);
-                    if (reportText === null) return;
-
-                    if (reportAlert) reportAlert.style.display = 'none';
-
-                    const fileURL = URL.createObjectURL(file);
-
-                    const reportCard = document.createElement('div');
-                    reportCard.className = 'report-card';
-                    reportCard.setAttribute('data-week', weekCount);
-
-                    reportCard.innerHTML = `
-                        <div class="card-header-row">
-                            <h4 class="report-card-title">Week ${weekCount} Progress Report</h4>
-                            <div class="card-actions">
-                                <button class="action-btn view-btn"><i class="fa-solid fa-eye"></i> View PDF</button>
-                                <button class="action-btn edit-btn"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                                <button class="action-btn delete-btn"><i class="fa-solid fa-trash"></i> Delete</button>
-                            </div>
-                        </div>
-                        <p class="report-card-text">${reportText}</p>
-                        <span class="file-name-badge"><i class="fa-solid fa-file-pdf"></i> ${file.name}</span>
-                    `;
-
-                    reportCard.querySelector('.view-btn').addEventListener('click', () => {
-                        modalTitle.textContent = `Preview: Week ${reportCard.getAttribute('data-week')} Report (${file.name})`;
-                        pdfFrame.src = fileURL;
-                        pdfModal.classList.add('show-modal');
-                    });
-
-                    reportCard.querySelector('.edit-btn').addEventListener('click', () => {
-                        requestPasscode(() => {
-                            const currentRemarks = reportCard.querySelector('.report-card-text').textContent;
-                            const updatedRemarks = prompt('Edit your report remarks:', currentRemarks);
-                            if (updatedRemarks !== null && updatedRemarks.trim() !== '') {
-                                reportCard.querySelector('.report-card-text').textContent = updatedRemarks;
-                            }
-                        });
-                    });
-
-                    reportCard.querySelector('.delete-btn').addEventListener('click', () => {
-                        requestPasscode(() => {
-                            if (confirm('Are you sure you want to delete this weekly report entry?')) {
-                                reportCard.remove();
-                                if (reportsContainer.children.length === 0 && reportAlert) {
-                                    reportAlert.style.display = 'block';
-                                }
-                            }
-                        });
-                    });
-
-                    reportsContainer.appendChild(reportCard);
-                    weekCount++;
-                };
-
-                fileInput.click();
-            });
-        });
-    }
+    window.addEventListener('hashchange', handleHashChange);
+    handleHashChange();
 });

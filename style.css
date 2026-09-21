@@ -105,7 +105,7 @@ body {
 }
 
 /* ==========================================
-   VIEWPORT & TAB PANELS (STABLE ANIMATION)
+   4. VIEWPORT & TAB PANELS
    ========================================== */
 .viewport-window {
     flex: 1;
@@ -115,19 +115,17 @@ body {
     overflow-y: auto;
 }
 
-/* Hide inactive panels */
 .tab-panel {
     display: none;
     background-color: rgba(255, 255, 255, 0.97);
     border-radius: 12px;
-    padding: 30px;
+    padding: 35px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
     width: 100%;
     min-height: 100%;
     box-sizing: border-box;
 }
 
-/* Display active panel with fade-in animation */
 .tab-panel.active-panel {
     display: block;
     animation: panelAppear 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -145,119 +143,10 @@ body {
 }
 
 /* ==========================================
-   5. INTERIOR CONTENT & CARDS
+   5. PROFILE & CONTENT LAYOUTS
    ========================================== */
-section { margin-bottom: 30px; }
-.student-title h2 { color: #800000; font-size: 28px; font-weight: 700; }
-.student-title .subtitle { font-size: 14px; color: #666666; margin-bottom: 12px; }
+section { margin-bottom: 20px; }
 
-section h3 {
-    color: #5c3a21;
-    font-size: 20px;
-    margin-bottom: 15px;
-    border-bottom: 1px solid #e6dfd3;
-    padding-bottom: 6px;
-}
-
-.about-text { font-size: 14.5px; line-height: 1.6; color: #444444; }
-
-.social-links { display: flex; gap: 10px; margin-top: 15px; }
-.social-icon {
-    width: 34px; height: 34px; background: #ffffff; border: 1px solid #e0decb;
-    border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    color: #444444; text-decoration: none; transition: all 0.2s ease;
-}
-.social-icon:hover { background: #800000; color: #ffffff; border-color: #800000; }
-
-.cards-grid { display: flex; gap: 20px; }
-.competency-card {
-    flex: 1; background: #ffffff; border: 1px solid #f0edd9;
-    border-radius: 10px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-}
-.card-icon { font-size: 22px; color: #800000; margin-bottom: 10px; }
-.competency-card h4 { font-size: 16px; margin-bottom: 6px; }
-.competency-card p { font-size: 13.5px; color: #666666; line-height: 1.4; }
-
-.content-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.add-report-btn {
-    background: #800000; color: #ffffff; border: none; padding: 9px 16px;
-    font-size: 13.5px; font-weight: 600; border-radius: 6px; cursor: pointer;
-}
-.add-report-btn:hover { background: #660000; }
-.report-alert { background: #fffde7; border-left: 4px solid #ffcc00; padding: 15px; color: #554400; font-size: 14.5px; border-radius: 4px; }
-
-/* ==========================================
-   6. REPORT CARDS & MODALS (STRICT HIDDEN DEFAULT)
-   ========================================== */
-.report-card {
-    background-color: #fdfdfd;
-    border: 1px solid #e6dfd3;
-    padding: 18px;
-    margin-top: 15px;
-    border-radius: 8px;
-}
-
-.card-header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.report-card-title { color: #800000; font-size: 16px; font-weight: 600; }
-.report-card-text { color: #444444; font-size: 14px; line-height: 1.5; margin-bottom: 10px; }
-
-.file-name-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-size: 12px; color: #800000; background-color: #f7eded;
-    padding: 4px 10px; border-radius: 4px; border: 1px solid #ebd2d2;
-}
-
-.card-actions { display: flex; gap: 8px; }
-.action-btn {
-    border: none; padding: 6px 12px; font-size: 12px; font-weight: 600;
-    border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px;
-}
-.view-btn { background-color: #800000; color: #ffffff; }
-.edit-btn { background-color: #e0e0e0; color: #333333; }
-.delete-btn { background-color: #ffebee; color: #c62828; }
-
-/* STRICT MODAL OVERLAY STYLING */
-.modal {
-    display: none !important; /* Forces modals to stay completely hidden on load */
-    position: fixed;
-    z-index: 999;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.65);
-    backdrop-filter: blur(3px);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal.show-modal {
-    display: flex !important; /* Revealed only via JS execution */
-}
-
-.modal-content {
-    background-color: #ffffff;
-    width: 80%;
-    max-width: 850px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-}
-
-.passcode-modal-content { max-width: 380px; }
-.passcode-body { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
-#passcode-input { padding: 9px 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; outline: none; }
-#passcode-input:focus { border-color: #800000; }
-
-.modal-header {
-    background-color: #800000; color: #ffffff; padding: 14px 20px;
-    display: flex; justify-content: space-between; align-items: center;
-}
-.modal-header h3 { font-size: 16px; font-weight: 600; }
-.close-modal-btn, .close-passcode-btn { font-size: 22px; cursor: pointer; color: #ffffff; }
-.modal-body iframe { border: none; display: block; }
-
-/* Centered Profile Layout */
 .centered-profile {
     display: flex;
     flex-direction: column;
@@ -275,7 +164,7 @@ section h3 {
     border: 4px solid #800000;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
     margin-bottom: 20px;
-    background-color: #f5f5f5; /* Fallback container color */
+    background-color: #f5f5f5;
     display: block;
 }
 
@@ -284,12 +173,50 @@ section h3 {
     height: 100%;
     object-fit: cover;
     display: block;
-    font-size: 0; /* Keeps broken alt text hidden inside frame */
 }
 
-.centered-links {
-    justify-content: center;
-    margin-top: 20px;
+.student-title h2 { color: #800000; font-size: 28px; font-weight: 700; }
+.student-title .subtitle { font-size: 14px; color: #666666; margin-bottom: 12px; }
+.about-text { font-size: 14.5px; line-height: 1.6; color: #444444; }
+
+.social-links { display: flex; gap: 10px; margin-top: 15px; }
+.social-icon {
+    width: 34px; height: 34px; background: #ffffff; border: 1px solid #e0decb;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: #444444; text-decoration: none; transition: all 0.2s ease;
+}
+.social-icon:hover { background: #800000; color: #ffffff; border-color: #800000; }
+.centered-links { justify-content: center; margin-top: 20px; }
+
+/* ==========================================
+   6. GDRIVE HYPERLINK LIST STYLING
+   ========================================== */
+.link-section h3 {
+    color: #333333;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.drive-link-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.drive-link-list li {
+    margin-bottom: 8px;
+}
+
+.drive-link-list a {
+    color: #0000ee;
+    text-decoration: underline;
+    font-size: 15px;
+    transition: color 0.15s ease;
+}
+
+.drive-link-list a:hover {
+    color: #551a8b;
 }
 
 /* ==========================================
@@ -318,17 +245,8 @@ section h3 {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.company-header h2 { 
-    color: #800000; 
-    font-size: 24px; 
-    font-weight: 700; 
-}
-
-.company-header .subtitle { 
-    font-size: 14px; 
-    color: #666666; 
-    margin-top: 5px; 
-}
+.company-header h2 { color: #800000; font-size: 24px; font-weight: 700; }
+.company-header .subtitle { font-size: 14px; color: #666666; margin-top: 5px; }
 
 .company-details h3 {
     color: #5c3a21;
@@ -353,7 +271,6 @@ section h3 {
     color: #444444;
 }
 
-/* Custom FontAwesome Checkmarks for the list */
 .company-mandates-list li::before {
     content: "\f058";
     font-family: "Font Awesome 6 Free";
